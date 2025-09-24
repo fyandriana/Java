@@ -1,0 +1,14 @@
+#Bank Account Exercise
+#Create a program loop that asks the user if they want to continue.
+#If they do, ask them what kind of transaction, deposit or withdrawal
+#Otherwise thank the user and end the program.
+#They must first deposit money to withdrawal because there
+#is no money in the bank. If they try to withdrawal and
+#they have insufficient funds, tell them and restart
+#only allow amounts > 0 to be withdrawn.
+#only allow Y or N as input for continuing the program, if they give the wrong
+#input, tell them and ask again.
+#Ask for Deposit (D), Withdrawal (W) or Balance(B)
+
+
+    

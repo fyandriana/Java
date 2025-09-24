@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item key="hasShownOverlayPopupBefore" value="true"/>
+	<section name="java.lang.Class">
+		<item key="replaceBarOpen" value="false"/>
+		<list key="findhistory">
+			<item value="txtName"/>
+			<item value="round2"/>
+			<item value="local"/>
+			<item value="font"/>
+			<item value="-40"/>
+			<item value="btnSubmit"/>
+			<item value="showError"/>
+			<item value="add"/>
+			<item value="Hourly"/>
+			<item value="onsubmit"/>
+			<item value="cont"/>
+		</list>
+		<list key="replacehistory">
+			<item value="-30"/>
+			<item value="this.showError"/>
+		</list>
+	</section>
+</section>

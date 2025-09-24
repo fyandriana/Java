@@ -1,0 +1,144 @@
+package ca.herzing.notepad;
+
+import java.awt.Toolkit;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileFilter;
+
+public class Notepad extends JFrame{
+
+	private JTextArea textArea = new JTextArea();
+	private File currentFile = null;
+	private boolean hasChanged = false;
+	
+	public Notepad() {
+		super("D21 - Notepad Editor");
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setSize(900, 600);
+		setLocationRelativeTo(null);
+		
+		// adding text area
+		JScrollPane scrollPane = new JScrollPane(textArea);
+		textArea.getDocument().addDocumentListener(new DocumentListener() {
+			@Override 
+			public void insertUpdate(DocumentEvent e) { _hasChanged(); }
+			@Override 
+			public void removeUpdate(DocumentEvent e) { _hasChanged(); }
+			@Override 
+			public void changedUpdate(DocumentEvent e) { _hasChanged(); }
+			});
+		add(scrollPane);
+		
+		// build menu
+		JMenuBar bar = new JMenuBar();
+		JMenu file = new JMenu("File");
+
+
+		JMenuItem open = new JMenuItem("Open");
+		open.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		open.addActionListener(e -> onOpen());
+
+
+		JMenuItem save = new JMenuItem("Save");
+		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx()));
+		// save.addActionListener(e -> onSave());
+
+
+		JMenuItem saveAs = new JMenuItem("Save As");
+		saveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx() | InputEvent.SHIFT_DOWN_MASK));
+		// saveAs.addActionListener(e -> onSaveAs());
+
+
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.addActionListener(e -> dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING)));
+
+
+		file.add(open);
+		file.add(save);
+		file.add(saveAs);
+		file.addSeparator();
+		file.add(exit);
+
+
+		bar.add(file);
+		setJMenuBar(bar);
+	}
+	
+	private void onOpen() {
+		// if (!confirmDiscardIfDirty()) return;
+		JFileChooser chooser = new JFileChooser();
+		FileFilter filter = new FileNameExtensionFilter("Txt File", "txt"); // add filter
+		chooser.setFileFilter(filter);
+		chooser.setAcceptAllFileFilterUsed(false); // accept text file only
+		chooser.setDialogTitle("Open Text File");
+		
+		int result = chooser.showOpenDialog(this);
+		if (result == JFileChooser.APPROVE_OPTION) {
+			File file = chooser.getSelectedFile();
+			try {
+				// textArea.append(Filename);
+				String content = Files.readString(file.toPath(), StandardCharsets.UTF_8);
+				textArea.setText(content);
+				textArea.setCaretPosition(0);
+				currentFile = file; // now the file exists in memory
+				hasChanged = false;
+				_updateTitle();
+			} catch (IOException ex) {
+				 _showError("Failed to open file:\n" + ex.getMessage());
+			}
+		}
+	}
+	
+	private boolean confirmDiscardIfChanged() {
+		if (!hasChanged) return true;
+		int choice = JOptionPane.showConfirmDialog(
+		this,
+		"You have unsaved changes. Do you want to save them?",
+		"Unsaved Changes",
+		JOptionPane.YES_NO_CANCEL_OPTION,
+		JOptionPane.WARNING_MESSAGE
+		);
+		if (choice == JOptionPane.CANCEL_OPTION) return false;
+		if (choice == JOptionPane.YES_OPTION) {
+		// onSave();
+		return !hasChanged; // Only proceed if save succeeded
+		}
+		return true; // NO: discard changes
+		}
+	
+	/**
+	 * update window title
+	 */
+	protected void _updateTitle() {
+		String name = (currentFile == null) ? "Untitled" : currentFile.getName();
+		setTitle((hasChanged ? "*" : "") + name + " - Notepad Editor");
+	}
+	
+	/**
+	 * revoked by listeners if there is change
+	 */
+	protected void _hasChanged() {
+		if(!hasChanged) {
+			hasChanged = true;
+			_updateTitle();
+		}
+	}
+	
+
+
+	private void _showError(String message) {
+		JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public static void main(String[] args) {
+		SwingUtilities.invokeLater(() -> new Notepad().setVisible(true));
+	}
+}

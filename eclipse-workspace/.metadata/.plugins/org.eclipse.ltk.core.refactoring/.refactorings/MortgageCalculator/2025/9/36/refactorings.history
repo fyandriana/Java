@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;ca.herzing.mortgagecalculator.LoanAmount&apos; to &apos;LoanAccount&apos;&#x0D;&#x0A;- Original project: &apos;MortgageCalculator&apos;&#x0D;&#x0A;- Original element: &apos;ca.herzing.mortgagecalculator.LoanAmount&apos;&#x0D;&#x0A;- Renamed element: &apos;ca.herzing.mortgagecalculator.LoanAccount&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;LoanAmount&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;ca.herzing.mortgagecalculator{LoanAmount.java[LoanAmount" matchStrategy="1" name="LoanAccount" qualified="false" references="true" similarDeclarations="false" stamp="1757184944143" textual="false" version="1.0"/>
+</session>

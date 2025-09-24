@@ -1,0 +1,66 @@
+package ca.herzing.automobile;
+
+import java.text.NumberFormat;
+import java.util.Locale;
+
+
+class AutoCustomer {
+    private final String name;
+    private final String customerType;    
+    private final double subTotalAmount;  
+    private final double newTotal;        
+
+    private static final NumberFormat MONEY = NumberFormat.getCurrencyInstance(Locale.CANADA);
+
+    public String getName() {
+    	return this.name;
+    }
+    public AutoCustomer(String name, String customerType, double subTotalAmount) {
+        this.name = name;
+        this.customerType = customerType;
+        this.subTotalAmount = subTotalAmount;
+        double discountRate = getDiscountRate(customerType);
+        this.newTotal = subTotalAmount * discountRate;
+    }
+
+    private static double getDiscountRate(String type) {
+        if (type == null) return 0.0;
+        String t = type.trim().toLowerCase();
+        switch (t) {
+            case "employee": return 0.92;  // 8%
+            case "manager":  return 0.88;  // 12%
+            default:         return 1;   // no discount
+        }
+    }
+
+
+    public static String tableTitle() {
+        return "Automobile Calculation Summary"+System.lineSeparator()+"=".repeat(50)+System.lineSeparator();
+    }
+
+    public static String tableHeader() {
+        // Columns Name | Total | New total
+        return String.format("%-22s %-15s %-15s", "Name", "Total", "New total");
+    }
+
+    public static String separator(String sep) {
+        return sep.repeat(50);
+    }
+
+    @Override
+    public String toString() {
+        // A single row for this customer
+        return String.format(
+                "%-22s %-15s %-15s",
+                name,
+                MONEY.format(subTotalAmount),
+                MONEY.format(newTotal)
+        );
+    }
+
+    // Getters if needed later
+    public String getName() { return name; }
+    public String getCustomerType() { return customerType; }
+    public double getSubTotalAmount() { return subTotalAmount; }
+    public double getNewTotal() { return newTotal; }
+}

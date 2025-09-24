@@ -1,0 +1,44 @@
+Create a GUI application called WageCalculator that will manage an array list of Employees.   Out of a total of 39 pts
+
+Create an Abstract Class Employee with the following fields: 3pts
+public double grossPay
+public double taxes
+public double netpay
+
+Create an interface called Payroll that requires the creation of a function called generatePayroll();  3pts
+
+Create a concrete class HourlyEmployee that extends Employee and implements Payroll with the following fields:   3pts
+public String name
+public double hourlyWage
+public double hoursWorked
+
+Create a constructor that takes, name, wage and hours   3pts
+
+set up toString method to output all data. 3pts
+
+set up generatePayroll to calculate based on 3 pts
+grossPay = wage*hours
+taxes = grossPay * 0.15
+netpay = grossPay - taxes
+
+Create a concrete class SalaryEmployee that extends Employee and implements Payroll with the following fields:   2pts
+public String name
+public double salary
+
+Create a constructor that takes, name and salary  3pts
+
+set up toString method to output all data.   3pts
+
+set up generatePayroll to calculate based on   3pts
+weeklysalary = salary / 26
+grossPay = weeklysalary 
+taxes = weekysalary * 0.15
+netpay = grosspay - taxes
+
+On the form, the employee type will be select from a drop down list (Hourly or Wage) disable all buttons and fields until an employee type is selected. The other fields are Employee name, wage/salary and hours worked. If hourly is chosen, show all three text boxes, if salary is chosen, enable only the salary amount box (yearly salary).
+5pts
+
+Clicking submit will validate the form, set up a default value called "select" for the drop down list, if this value is chosen (meaning they didnt make a proper selection) then don't allow them to proceed (invalid). Validate all fields for emptyness and the wage and hours boxes as numbers. If valid submit the Employee to the correct object type and display their toString in the textarea txtOutput. Also submit them to the array list of <Employee>. (points in validation section)
+
+There is also a Show Report button at the bottom underneath the txtOutput, when clicked will output all the toStrings of the arraylist to txtOutput 
+5pts
